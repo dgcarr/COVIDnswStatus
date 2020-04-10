@@ -13,7 +13,8 @@ from datetime import date
 
 
 # Load csv archive data from github repo
-path='https://raw.githubusercontent.com/dgcarr/COVIDnswStatus/master/NSW_HealthData.csv'
+#path='https://raw.githubusercontent.com/dgcarr/COVIDnswStatus/master/NSW_HealthData.csv'
+path='/home/pi/COVIDnswStatus/NSW_HealthData.csv'
 df=pd.read_csv(path, index_col=0)
 df['Date'] = pd.to_datetime(df['Date'],dayfirst=True)
 
@@ -40,16 +41,16 @@ if dforigins['Cases'].dtypes =='object':
 
 nc=dforigins.loc[dforigins['Source'] == 'Total','Cases'].values[0]
 #nc=nc[0]
-print(nc)
+#print(nc)
 
 ui = dforigins.loc[dforigins['Source'] == 'Under investigation','Cases'].values[0]
-print(ui)
+#print(ui)
 
 un = dforigins.loc[dforigins['Source'] == 'Locally acquired – contact not identified','Cases'].values[0]
-print(un)
+#print(un)
 
 ui_un=ui+un
-print(ui_un)
+#print(ui_un)
 #dforigins
 
 dfnew = pd.read_html('https://www.health.nsw.gov.au/Infectious/diseases/Pages/covid-19-latest.aspx',match='Cases',header=0)
@@ -90,9 +91,9 @@ df_update=pd.DataFrame({'Date':[currentdate] ,
                     columns = ['Date','Confirmed Cases','Tested and Cleared','Unexplained Origin','Deaths'])
 df_update['Date'] = pd.to_datetime(df_update['Date'],dayfirst=True)
 dfapp=df.append(df_update,ignore_index=True,)
-print(dfapp)
+#print(dfapp)
 if dfapp['Date'].iloc[-1]>df['Date'].iloc[-1]:
          df=dfapp
 
-df.to_csv("NSW_HealthData.csv")
-df
+df.to_csv("/home/pi/COVIDnswStatus/NSW_HealthData.csv")
+#df
